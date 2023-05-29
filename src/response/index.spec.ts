@@ -99,10 +99,12 @@ describe('Res class', () => {
   });
 
   it('Clear and update cookies', () => {
-    const cookie1 =
-      'Test1=; httpOnly=true; domain=test.com; path=/; sameSite=none; expires=Thu Jan 01 1970 01:00:00 GMT+0100 (Central European Standard Time); secure=true;';
-    const cookie2 =
-      'Test2=; httpOnly=true; domain=test.com; path=/; sameSite=none; expires=Thu Jan 01 1970 01:00:00 GMT+0100 (Central European Standard Time); secure=true;';
+    const cookie1 = `Test1=; httpOnly=true; domain=test.com; path=/; sameSite=none; expires=${new Date(
+      0
+    )}; secure=true;`;
+    const cookie2 = `Test2=; httpOnly=true; domain=test.com; path=/; sameSite=none; expires=${new Date(
+      0
+    )}; secure=true;`;
 
     const response = res.clearCookie('Test1');
     expect(response.getHeader('Set-Cookie')).toBe(cookie1);

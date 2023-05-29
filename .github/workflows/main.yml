@@ -18,3 +18,10 @@ jobs:
 
       - name: Run tests
         run: npm run test
+
+      - name: Set PR status
+        if: ${{ always() }}
+        uses: 'marvinpinto/action-automatic-merge@v1'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_status: 'blocking'
