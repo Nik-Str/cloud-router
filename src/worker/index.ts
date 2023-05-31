@@ -4,12 +4,10 @@ import { App, Res, Req, Middleware } from '..';
 export default class Server {
   req: Req;
   res: Res;
-  url: URL;
 
-  constructor(req: Request, public app: App, baseHeaders?: Record<string, string>) {
-    this.req = req as Req;
-    this.res = new Res(req, baseHeaders);
-    this.url = new URL(this.req.url);
+  constructor(req: Request, public app: App, headers?: Record<string, string>) {
+    this.req = new Req(req);
+    this.res = new Res(req, headers);
   }
 
   public async listen(): Promise<Response> {
@@ -17,15 +15,15 @@ export default class Server {
       // Authenticate
       const authHandler = this.app.getAuthHandler();
       if (authHandler) {
-        const isResponse = await authHandler(this.req, this.res, this.url);
+        const isResponse = await authHandler(this.req, this.res);
         if (isResponse instanceof Response) return isResponse;
       }
 
       // Public
-      const path = this.url.pathname.split('/').filter((string) => string);
+      const path = this.req._url.pathname.split('/').filter((string: string) => string);
       const publicRoutes = this.app.getPublicRoutes();
       const publicHandler = publicRoutes[path[0]];
-      if (publicHandler) return await publicHandler(this.req, this.res, this.url);
+      if (publicHandler) return await publicHandler(this.req, this.res);
 
       // Middleware
       const appMiddlewares = this.app.getMiddlewares();
@@ -42,9 +40,9 @@ export default class Server {
       // Not found
       if (!router || !route) {
         const notFound = this.app.getNotFoundHandler();
-        if (notFound) return await notFound(this.req, this.res, this.url);
+        if (notFound) return await notFound(this.req, this.res);
         return this.res
-          .status(404, `Invalid or unknown path: ${this.url.pathname}`)
+          .status(404, `Invalid or unknown path: ${this.req._url.pathname}`)
           .send('404 not found', 'text/plain');
       }
 
@@ -55,18 +53,19 @@ export default class Server {
       }
 
       // Router controller
-      return await route.controller(this.req, this.res, this.url);
+      return await route.controller(this.req, this.res);
     } catch (err: Error | any) {
+      console.error(err.message);
       // Error handler
       const errorHandler = this.app.getErrorHandler();
-      if (errorHandler) return await errorHandler(this.req, this.res, this.url);
+      if (errorHandler) return await errorHandler(this.req, this.res);
       return this.res.status(500, `Error: ${err.message}`).send('500 internal server error', 'text/plain');
     }
   }
 
   private async executeMiddleware(middlewares: Middleware[]): Promise<boolean | Response> {
     for (const method of middlewares) {
-      const isResponse = await method(this.req, this.res, this.url);
+      const isResponse = await method(this.req, this.res);
       if (isResponse instanceof Response) return isResponse;
     }
     return false;

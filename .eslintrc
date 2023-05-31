@@ -30,7 +30,8 @@
     "import/newline-after-import": "off",
     "no-return-await": "off",
     "@typescript-eslint/return-await": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "no-underscore-dangle": "off"
   },
   "ignorePatterns": ["src/**/*.test.ts", "app", "css", "build"]
 }

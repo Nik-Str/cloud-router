@@ -1,7 +1,7 @@
 import { Res, Req } from '../';
 
-export type Middleware = (req: Req, res: Res, url: URL) => void | Promise<any | Response> | Response | Error;
-export type Controller = (req: Req, res: Res, url: URL) => Response | Promise<Response>;
+export type Middleware = (req: Req, res: Res) => void | Promise<any | Response> | Response | Error;
+export type Controller = (req: Req, res: Res) => Response | Promise<Response>;
 export type Methods = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTION' | 'HEAD';
 export type Public = Record<string, Controller>;
 export type Route = { path: string; method: Methods; controller: Controller };
@@ -93,3 +93,6 @@ export class Router {
     this.routes.push({ path, method: 'OPTION', controller });
   }
 }
+// addera ytterligare en prop till Route interface (param: boolean)
+// // param: /\/:/.test(path)
+// Sen när vi testar route i worker, har vi även denna att kolla mot innan vi testar för enkel "/"

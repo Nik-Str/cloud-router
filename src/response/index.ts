@@ -13,7 +13,7 @@ export default class Res {
   private statusCode = 200;
   private statusText = 'ok';
   private headers: Headers;
-  private defaultCookiesOptions: CookieOptions = {
+  private cookiesOptions: CookieOptions = {
     httpOnly: true,
     domain: '',
     path: '/',
@@ -22,9 +22,9 @@ export default class Res {
     secure: true
   };
 
-  constructor(req: Request, baseHeaders?: Record<string, string>) {
-    this.headers = baseHeaders ? new Headers(baseHeaders) : new Headers();
-    this.defaultCookiesOptions.domain = new URL(req.url).hostname;
+  constructor(req: Request, headers?: Record<string, string>) {
+    this.headers = headers ? new Headers(headers) : new Headers();
+    this.cookiesOptions.domain = new URL(req.url).hostname;
   }
 
   // Response
@@ -98,7 +98,7 @@ export default class Res {
   // Cookies
   setCookie(name: string, value: string, options: CookieOptions = {}): Res {
     const cookie: string[] = [`${name}=${value};`];
-    for (const [key, option] of Object.entries({ ...this.defaultCookiesOptions, ...options })) {
+    for (const [key, option] of Object.entries({ ...this.cookiesOptions, ...options })) {
       cookie.push(`${key}=${option};`);
     }
     this.headers.append('Set-Cookie', cookie.join(' '));

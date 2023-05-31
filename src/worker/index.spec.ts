@@ -1,8 +1,8 @@
 import { Res, Req, Worker, App, Router } from '..';
 
 let i = 0;
-const authenticate = (req: Req, res: Res, url: URL) => {
-  if (url.searchParams.has('abort')) return res.status(400).json({ data: 'aborted' });
+const authenticate = (req: Req, res: Res) => {
+  if (req._url.searchParams.has('abort')) return res.status(400).json({ data: 'aborted' });
 };
 const publicRoute = (req: Req, res: Res) => res.status(200).json({ data: 'Public' });
 const middlewareA = (req: Req) =>
@@ -12,14 +12,14 @@ const middlewareA = (req: Req) =>
       resolve(null);
     }, 500);
   });
-const middlewareB = (req: Req, res: Res, url: URL) => {
-  if (url.searchParams.has('failed')) return res.status(406).json({ data: 'failed' });
+const middlewareB = (req: Req, res: Res) => {
+  if (req._url.searchParams.has('failed')) return res.status(406).json({ data: 'failed' });
   req.testB = i++;
 };
-const middlewareC = (req: Req, res: Res, url: URL) =>
+const middlewareC = (req: Req, res: Res) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      if (url.searchParams.has('invalid')) {
+      if (req._url.searchParams.has('invalid')) {
         const response = res.status(401).json({ data: 'invalid' });
         return resolve(response);
       }
@@ -30,8 +30,8 @@ const middlewareC = (req: Req, res: Res, url: URL) =>
 const middlewareD = (req: Req) => {
   req.testD = i++;
 };
-const middlewareError = (req: Req, res: Res, url: URL) => {
-  if (url.searchParams.has('error')) throw new Error('123');
+const middlewareError = (req: Req) => {
+  if (req._url.searchParams.has('error')) throw new Error('123');
 };
 const controllerA = (req: Req, res: Res) => res.status(200).json({ data: 'A' });
 const controllerB = (req: Req, res: Res) => res.status(200).json({ data: 'B' });
@@ -57,8 +57,8 @@ const routerB = new Router();
 routerB.get('test', controllerE);
 routerB.get('test/midd', controllerF);
 
-const baseHeaders = {
-  'Access-Control-Allow-baseHeaders': '*',
+const headers = {
+  'Access-Control-Allow-headers': '*',
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': '*',
   'Access-Control-Allow-Credentials': 'true',
@@ -77,7 +77,7 @@ app.error(error);
 describe('Server class', () => {
   it('Listen and return response', async () => {
     const req = new Request('https://server.com/base');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     expect(res).toBeInstanceOf(Response);
@@ -90,9 +90,9 @@ describe('Server class', () => {
     });
     const reqC = new Request('https://server.com/base/test');
     const reqD = new Request('https://server.com/base/test/two');
-    const workerB = new Worker(reqB, app, baseHeaders);
-    const workerC = new Worker(reqC, app, baseHeaders);
-    const workerD = new Worker(reqD, app, baseHeaders);
+    const workerB = new Worker(reqB, app, headers);
+    const workerC = new Worker(reqC, app, headers);
+    const workerD = new Worker(reqD, app, headers);
 
     const resB = await workerB.listen();
     expect(await resB.json()).toEqual({ data: 'B' });
@@ -104,7 +104,7 @@ describe('Server class', () => {
 
   it('Handle multiple base routes', async () => {
     const req = new Request('https://server.com/api/test');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     expect(await res.json()).toEqual({ data: 'E' });
@@ -112,7 +112,7 @@ describe('Server class', () => {
 
   it('Execute async and sync app and router middleware in order', async () => {
     const req = new Request('https://server.com/api/test/midd');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const resE = await worker.listen();
     const { a, b, c, d } = (await resE.json()) as any;
@@ -128,7 +128,7 @@ describe('Server class', () => {
   it('Handle early abortion response in auth', async () => {
     i = 0;
     const req = new Request('https://server.com/api/test/midd?abort=true');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     const data = (await res.json()) as any;
@@ -140,7 +140,7 @@ describe('Server class', () => {
   it('Handle early abortion response in app middleware', async () => {
     i = 0;
     const req = new Request('https://server.com/api/test/midd?failed=true');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     const data = (await res.json()) as any;
@@ -152,7 +152,7 @@ describe('Server class', () => {
   it('Handle early abortion response in router middleware', async () => {
     i = 0;
     const req = new Request('https://server.com/api/test/midd?invalid=true');
-    const server = new Worker(req, app, baseHeaders);
+    const server = new Worker(req, app, headers);
 
     const res = await server.listen();
     const data = (await res.json()) as any;
@@ -164,7 +164,7 @@ describe('Server class', () => {
   it('Handle public routes', async () => {
     i = 0;
     const req = new Request('https://server.com/image/some123random456id');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     const data = (await res.json()) as any;
@@ -176,7 +176,7 @@ describe('Server class', () => {
   it('Handles 404 not found response', async () => {
     i = 0;
     const req = new Request('https://server.com/notfound/123');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     const data = (await res.json()) as any;
@@ -187,7 +187,7 @@ describe('Server class', () => {
   it('Handles 500 response on error in controller', async () => {
     i = 0;
     const req = new Request('https://server.com/base/test/error');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     const data = (await res.json()) as any;
@@ -198,7 +198,7 @@ describe('Server class', () => {
   it('Handles 500 response on error in middleware', async () => {
     i = 0;
     const req = new Request('https://server.com/base/test/error?error=true');
-    const worker = new Worker(req, app, baseHeaders);
+    const worker = new Worker(req, app, headers);
 
     const res = await worker.listen();
     const data = (await res.json()) as any;
