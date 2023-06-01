@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { App, Res, Req, Middleware } from '..';
+import { App, Res, Req, Middleware, Route, Routes } from '..';
 
 export default class Server {
   req: Req;
@@ -33,9 +33,7 @@ export default class Server {
       }
 
       const router = this.app.getRouters()[path[0]];
-      const route = router?.routes.filter(
-        (_route) => _route.path === (path.slice(1).join('/') || '/') && _route.method === this.req.method
-      )[0];
+      const route = this.getRoute(router, path);
 
       // Not found
       if (!router || !route) {
@@ -44,6 +42,13 @@ export default class Server {
         return this.res
           .status(404, `Invalid or unknown path: ${this.req._url.pathname}`)
           .send('404 not found', 'text/plain');
+      }
+
+      // Param
+      if (route.param) {
+        const ref = route.path.split(':').pop();
+        const param = path.pop();
+        if (ref && param) this.req.param[ref] = param;
       }
 
       // Router Middleware
@@ -55,12 +60,21 @@ export default class Server {
       // Router controller
       return await route.controller(this.req, this.res);
     } catch (err: Error | any) {
-      console.error(err.message);
       // Error handler
       const errorHandler = this.app.getErrorHandler();
       if (errorHandler) return await errorHandler(this.req, this.res);
       return this.res.status(500, `Error: ${err.message}`).send('500 internal server error', 'text/plain');
     }
+  }
+
+  private getRoute(router: Routes, path: string[]): Route | null {
+    return router?.routes.filter((_route) => {
+      if (_route.param)
+        return (
+          _route.path.split(':')[0] === (`${path.slice(1, -1).join('/')}/` || '/') && _route.method === this.req.method
+        );
+      return _route.path === (path.slice(1).join('/') || '/') && _route.method === this.req.method;
+    })[0];
   }
 
   private async executeMiddleware(middlewares: Middleware[]): Promise<boolean | Response> {

@@ -4,12 +4,13 @@ export type Middleware = (req: Req, res: Res) => void | Promise<any | Response> 
 export type Controller = (req: Req, res: Res) => Response | Promise<Response>;
 export type Methods = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTION' | 'HEAD';
 export type Public = Record<string, Controller>;
-export type Route = { path: string; method: Methods; controller: Controller };
+export type Route = { path: string; method: Methods; controller: Controller; param: boolean };
+export type Routes = {
+  middlewares: Middleware[] | [];
+  routes: Route[];
+};
 export type Routers = {
-  [key: string]: {
-    middlewares: Middleware[] | [];
-    routes: Route[];
-  };
+  [key: string]: Routes;
 };
 
 export class App {
@@ -75,24 +76,27 @@ export class App {
 export class Router {
   routes: Route[] = [];
   post(path: string, controller: Controller) {
-    this.routes.push({ path, method: 'POST', controller });
+    this.routes.push({ path, method: 'POST', controller, param: /\/:[\w\d]+/.test(path) });
   }
   get(path: string, controller: Controller) {
-    this.routes.push({ path, method: 'GET', controller });
+    this.routes.push({ path, method: 'GET', controller, param: /\/:[\w\d]+/.test(path) });
   }
   put(path: string, controller: Controller) {
-    this.routes.push({ path, method: 'PUT', controller });
+    this.routes.push({ path, method: 'PUT', controller, param: /\/:[\w\d]+/.test(path) });
   }
   delete(path: string, controller: Controller) {
-    this.routes.push({ path, method: 'DELETE', controller });
+    this.routes.push({ path, method: 'DELETE', controller, param: /\/:[\w\d]+/.test(path) });
   }
   patch(path: string, controller: Controller) {
-    this.routes.push({ path, method: 'PATCH', controller });
+    this.routes.push({ path, method: 'PATCH', controller, param: /\/:[\w\d]+/.test(path) });
   }
   option(path: string, controller: Controller) {
-    this.routes.push({ path, method: 'OPTION', controller });
+    this.routes.push({ path, method: 'OPTION', controller, param: /\/:[\w\d]+/.test(path) });
+  }
+  head(path: string, controller: Controller) {
+    this.routes.push({ path, method: 'HEAD', controller, param: /\/:[\w\d]+/.test(path) });
   }
 }
 // addera ytterligare en prop till Route interface (param: boolean)
-// // param: /\/:/.test(path)
+// // param: /\/:[\w\d]+/.test(path)
 // Sen när vi testar route i worker, har vi även denna att kolla mot innan vi testar för enkel "/"

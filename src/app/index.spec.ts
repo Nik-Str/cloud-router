@@ -31,9 +31,9 @@ describe('App/Router class', () => {
     router.get('auth/user', controller);
     router.post('auth/user', controller);
     router.delete('auth/user', controller);
-    router.patch('auth/user', controller);
+    router.patch('auth/:id', controller);
     router.put('auth/user', controller);
-    router.option('auth/user', controller);
+    router.option('auth/:type', controller);
 
     app.setRouter('api', router, middlewareOne);
     const appRoutes = app.getRouters();
@@ -43,32 +43,38 @@ describe('App/Router class', () => {
       {
         path: 'auth/user',
         method: 'GET',
-        controller
+        controller,
+        param: false
       },
       {
         path: 'auth/user',
         method: 'POST',
-        controller
+        controller,
+        param: false
       },
       {
         path: 'auth/user',
         method: 'DELETE',
-        controller
+        controller,
+        param: false
       },
       {
-        path: 'auth/user',
+        path: 'auth/:id',
         method: 'PATCH',
-        controller
+        controller,
+        param: true
       },
       {
         path: 'auth/user',
         method: 'PUT',
-        controller
+        controller,
+        param: false
       },
       {
-        path: 'auth/user',
+        path: 'auth/:type',
         method: 'OPTION',
-        controller
+        controller,
+        param: true
       }
     ]);
     expect(appRoutes['api'].middlewares).toEqual([middlewareOne]);
@@ -87,12 +93,14 @@ describe('App/Router class', () => {
       {
         path: 'messages',
         method: 'GET',
-        controller
+        controller,
+        param: false
       },
       {
         path: 'messages',
         method: 'POST',
-        controller
+        controller,
+        param: false
       }
     ]);
     expect(appRoutes['chatt'].middlewares).toEqual([]);

@@ -43,6 +43,7 @@ const controllerF = (req: Req, res: Res) =>
 const controllerError = () => {
   throw new Error('123');
 };
+const controllerG = (req: Req, res: Res) => res.status(200).json({ data: req.param, method: req.method });
 const notFound = (req: Req, res: Res) => res.status(404).json({ data: '404' });
 const error = (req: Req, res: Res) => res.status(500).json({ data: '500' });
 
@@ -52,10 +53,13 @@ routerA.post('/', controllerB);
 routerA.get('test', controllerC);
 routerA.get('test/two', controllerD);
 routerA.get('test/error', controllerError);
+routerA.get('/:ref', controllerG);
 
 const routerB = new Router();
 routerB.get('test', controllerE);
 routerB.get('test/midd', controllerF);
+routerB.get('test/:id', controllerG);
+routerB.post('test/:type', controllerG);
 
 const headers = {
   'Access-Control-Allow-headers': '*',
@@ -204,5 +208,26 @@ describe('Server class', () => {
     const data = (await res.json()) as any;
     expect(res.status).toBe(500);
     expect(data).toEqual({ data: '500' });
+  });
+
+  it('Handlesroutes with param and ads it to the request object', async () => {
+    const reqA = new Request('https://server.com/api/test/example-uuid-123', { method: 'POST' });
+    const workerA = new Worker(reqA, app, headers);
+    const reqB = new Request('https://server.com/api/test/123-asd-uuid');
+    const workerB = new Worker(reqB, app, headers);
+    const reqC = new Request('https://server.com/base/999-asd-123');
+    const workerC = new Worker(reqC, app, headers);
+
+    const resA = await workerA.listen();
+    const resB = await workerB.listen();
+    const resC = await workerC.listen();
+
+    const dataA = (await resA.json()) as any;
+    const dataB = (await resB.json()) as any;
+    const dataC = (await resC.json()) as any;
+
+    expect(dataA).toEqual({ data: { type: 'example-uuid-123' }, method: 'POST' });
+    expect(dataB).toEqual({ data: { id: '123-asd-uuid' }, method: 'GET' });
+    expect(dataC).toEqual({ data: { ref: '999-asd-123' }, method: 'GET' });
   });
 });
