@@ -4,10 +4,10 @@ module.exports = {
   testTimeout: 10000,
   moduleFileExtensions: ['ts', 'js', 'json'],
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.ts$': 'ts-jest'
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
-  testMatch: ['**/*.spec.ts'],
+  testMatch: ['**/*.spec.ts']
 };

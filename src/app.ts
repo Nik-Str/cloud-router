@@ -1,4 +1,6 @@
-import { Res, Req } from '../';
+/* eslint-disable max-classes-per-file */
+import Req from './request';
+import Res from './response';
 
 export type Middleware = (req: Req, res: Res) => void | Promise<any | Response> | Response | Error;
 export type Controller = (req: Req, res: Res) => Response | Promise<Response>;
@@ -97,6 +99,3 @@ export class Router {
     this.routes.push({ path, method: 'HEAD', controller, param: /\/:[\w\d]+/.test(path) });
   }
 }
-// addera ytterligare en prop till Route interface (param: boolean)
-// // param: /\/:[\w\d]+/.test(path)
-// Sen när vi testar route i worker, har vi även denna att kolla mot innan vi testar för enkel "/"

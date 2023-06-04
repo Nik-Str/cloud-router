@@ -2,11 +2,12 @@
   "compilerOptions": {
     "strict": true,
     "target": "es2020",
+    "module": "es2020",
     "alwaysStrict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "lib": ["es2020", "webworker"],
-    "types": ["@cloudflare/workers-types", "node", "jest"],
+    "types": ["node", "jest"],
     "forceConsistentCasingInFileNames": true,
     "strictFunctionTypes": true,
     "resolveJsonModule": true,
@@ -14,7 +15,12 @@
     "isolatedModules": false,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "module": "es2020"
+    "removeComments": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": false,
+    "declaration": true
   },
-  "include": ["@types", "src"]
+  "include": ["@types", "src", "test/worker.spec.ts"],
+  "exclude": ["test"]
 }

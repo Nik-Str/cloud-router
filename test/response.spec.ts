@@ -1,4 +1,4 @@
-import { Res } from '..';
+import Res from '../src/response';
 
 const baseHeaders = {
   'Access-Control-Allow-Headers': '*',

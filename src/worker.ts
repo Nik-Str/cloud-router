@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/no-cycle
-import { App, Res, Req, Middleware, Route, Routes } from '..';
+import Req from './request';
+import Res from './response';
+import { App, Middleware, Route, Routes } from './app';
 
 export default class Server {
   req: Req;
@@ -10,6 +11,9 @@ export default class Server {
     this.res = new Res(req, headers);
   }
 
+  /**
+   * Initializes your worker and handles incoming request
+   */
   public async listen(): Promise<Response> {
     try {
       // Authenticate

@@ -2,20 +2,32 @@
   "name": "cloud-router",
   "version": "1.0.0",
   "description": "Inspired by Node Express, Cloud-Router makes it easier to build and organize your backend api using Cloudflare workers",
-  "main": "src/index.js",
+  "types": "./index.d.ts",
+  "main": "./index.js",
+  "author": "Niklas Strömberg",
+  "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
+  "engines": {
+    "node": ">= 0.18.0"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "cloudflare",
     "router",
     "workers",
-    "api"
+    "worker",
+    "api",
+    "serviceworker",
+    "http"
   ],
-  "author": "Niklas Strömberg",
-  "license": "MIT",
   "devDependencies": {
-    "@cloudflare/workers-types": "3.1.1",
     "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
@@ -28,6 +40,6 @@
     "jest": "^29.4.3",
     "prettier": "^2.8.2",
     "ts-jest": "^29.0.5",
-    "typescript": "^4.8.4"
+    "typescript": "^5.1.3"
   }
 }

@@ -33,5 +33,5 @@
     "no-await-in-loop": "off",
     "no-underscore-dangle": "off"
   },
-  "ignorePatterns": ["src/**/*.test.ts", "app", "css", "build"]
+  "ignorePatterns": ["test", "app", "css", "build"]
 }

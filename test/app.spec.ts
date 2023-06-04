@@ -1,4 +1,5 @@
-import { App, Router, Res } from '../';
+import Res from '../src/response';
+import { App, Router } from '../src/app';
 
 const app = new App();
 

@@ -1,4 +1,7 @@
-import { Res, Req, Worker, App, Router } from '..';
+import Req from '../src/request';
+import Res from '../src/response';
+import { App, Router } from '../src/app';
+import Worker from '../src/worker';
 
 let i = 0;
 const authenticate = (req: Req, res: Res) => {
