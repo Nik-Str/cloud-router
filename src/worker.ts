@@ -2,17 +2,37 @@ import Req from './request';
 import Res from './response';
 import App, { Middleware, Route, Routes } from './app';
 
+/**
+ * The Worker class, handles the App class instance execution.
+ * @example
+ * export default {
+ *  async fetch(request) {
+ *    const app = new App();
+ *    app.setRouter('api', (req, res) => {})
+ *    const cors = { 'Access-Control-Allow-Methods': '*' }
+ *    const worker = new Worker(request, app, cors)
+ *    return await worker.listen()
+ *  }
+ * }
+ */
 export default class Worker {
   req: Req;
   res: Res;
 
+  /**
+   * Creates an instance of the Worker class.
+   * @param {Request} req - The incoming request.
+   * @param {App} app - The App class object, including all the routes, middlewares and controllers of the application.
+   * @param {Record<string, string>} [headers] - Any default headers, that will be added to each response.
+   */
   constructor(req: Request, public app: App, headers?: Record<string, string>) {
     this.req = new Req(req);
     this.res = new Res(req, headers);
   }
 
   /**
-   * Initializes your worker and handles incoming request
+   * Initializes your worker and handles incoming request by executing the registered controllers and middlewares.
+   * @returns {Promise<Response>} A Promise with the Response
    */
   public async listen(): Promise<Response> {
     try {

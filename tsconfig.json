@@ -15,7 +15,7 @@
     "isolatedModules": false,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "removeComments": true,
+    "removeComments": false,
     "outDir": "build/compiled",
     "rootDir": "./src",
     "sourceMap": true,

@@ -31,7 +31,8 @@
     "no-return-await": "off",
     "@typescript-eslint/return-await": "off",
     "no-await-in-loop": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "max-classes-per-file": "off"
   },
   "ignorePatterns": ["test", "jest.config.js", "rollup.config.js"]
 }
