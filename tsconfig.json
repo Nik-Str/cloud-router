@@ -21,6 +21,6 @@
     "sourceMap": false,
     "declaration": true
   },
-  "include": ["@types", "src", "test/worker.spec.ts"],
+  "include": ["src"],
   "exclude": ["test"]
 }

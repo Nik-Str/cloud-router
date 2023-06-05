@@ -1,6 +1,6 @@
 import Req from './request';
 import Res from './response';
-import { App, Middleware, Route, Routes } from './app';
+import App, { Middleware, Route, Routes } from './app';
 
 export default class Server {
   req: Req;

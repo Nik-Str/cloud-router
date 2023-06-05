@@ -2,7 +2,7 @@
 module.exports = {
   testEnvironment: 'node',
   testTimeout: 10000,
-  moduleFileExtensions: ['ts', 'js', 'json'],
+  moduleFileExtensions: ['ts', 'js'],
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },

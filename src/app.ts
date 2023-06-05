@@ -15,7 +15,7 @@ export type Routers = {
   [key: string]: Routes;
 };
 
-export class App {
+export default class App {
   private routers: Routers = {};
   private middlewares: Middleware[] = [];
   private publicRoutes: Public = {};

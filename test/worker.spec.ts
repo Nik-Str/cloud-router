@@ -1,6 +1,6 @@
 import Req from '../src/request';
 import Res from '../src/response';
-import { App, Router } from '../src/app';
+import App, { Router } from '../src/app';
 import Worker from '../src/worker';
 
 let i = 0;

@@ -1,12 +1,13 @@
 import Res from '../src/response';
-import { App, Router } from '../src/app';
+import App, { Router } from '../src/app';
+import Req from '../src/request';
 
 const app = new App();
 
-const authenticate = (req: Request, res: Res) => {};
-const middlewareOne = (req: Request, res: Res) => res.status(200).json({ data: 'Awsome' });
-const middlewareTwo = (req: Request, res: Res) => res.status(300).redirect('/');
-const controller = (req: Request, res: Res) => res.status(404).send('404 not found', 'text/plain');
+const authenticate = () => {};
+const middlewareOne = (req: Req, res: Res) => res.status(200).json({ data: 'Awsome' });
+const middlewareTwo = (req: Req, res: Res) => res.status(300).redirect('/');
+const controller = (req: Req, res: Res) => res.status(404).send('404 not found', 'text/plain');
 
 describe('App/Router class', () => {
   it('Register app authentication', () => {
