@@ -2,34 +2,48 @@
   "name": "cloud-router",
   "version": "1.0.0",
   "description": "Inspired by Node Express, Cloud-Router makes it easier to build and organize your backend api using Cloudflare workers",
-  "types": "./index.d.ts",
-  "main": "./index.js",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "Niklas Strömberg",
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" --config .prettierrc.json",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "compile": "tsc",
+    "bundle": "rollup --config --bundleConfigAsCjs",
+    "clear": "rimraf build",
+    "build": "rimraf build && tsc && rollup --config --bundleConfigAsCjs"
   },
+  "repository": {
+    "type": "git",
+    "repositoryUrl": "https://github.com/Nik-Str/cloud-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nik-Str/cloud-router/issues"
+  },
+  "homepage": "https://github.com/Nik-Str/cloud-router#readme",
   "engines": {
     "node": ">= 0.18.0"
   },
   "files": [
-    "dist/",
+    "build/index.d.ts",
+    "build/index.js",
+    "build/index.js.map",
     "README.md",
     "LICENSE"
   ],
   "keywords": [
     "cloudflare",
     "router",
-    "workers",
     "worker",
     "api",
     "serviceworker",
+    "cloudflareworker",
     "http"
   ],
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.1",
     "@types/jest": "^29.5.2",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
@@ -41,6 +55,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29.5.0",
     "prettier": "^2.8.8",
+    "rollup": "^3.23.1",
+    "rollup-plugin-dts": "^5.3.0",
     "ts-jest": "^29.1.0",
     "typescript": "^5.1.3"
   }

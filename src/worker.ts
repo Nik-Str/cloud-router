@@ -2,7 +2,7 @@ import Req from './request';
 import Res from './response';
 import App, { Middleware, Route, Routes } from './app';
 
-export default class Server {
+export default class Worker {
   req: Req;
   res: Res;
 

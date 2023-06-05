@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "es2020",
-    "module": "es2020",
+    "target": "esnext",
+    "module": "esnext",
     "alwaysStrict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "lib": ["es2020", "webworker"],
+    "lib": ["esnext", "webworker"],
     "types": ["node", "jest"],
     "forceConsistentCasingInFileNames": true,
     "strictFunctionTypes": true,
@@ -16,9 +16,9 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "removeComments": true,
-    "outDir": "./dist",
+    "outDir": "build/compiled",
     "rootDir": "./src",
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": true
   },
   "include": ["src"],
