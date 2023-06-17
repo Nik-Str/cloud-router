@@ -1,9 +1,9 @@
-import Req from '../src/request';
+import ClientRequest from '../src/request';
 
 describe('Req class', () => {
   it('Add URL object to request', async () => {
     const request = new Request('http://example.com/api?test=123&param=true');
-    const req = new Req(request);
+    const req = new ClientRequest(request);
     expect(req._url).toBeInstanceOf(URL);
     expect(req._url.searchParams).toBeInstanceOf(URLSearchParams);
     expect(req._url.searchParams.get('test')).toEqual('123');

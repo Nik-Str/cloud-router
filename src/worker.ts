@@ -1,5 +1,5 @@
-import Req from './request';
-import Res from './response';
+import ClientRequest from './request';
+import WorkerResponse from './response';
 import App, { Middleware, Route, Routes } from './app';
 
 /**
@@ -8,16 +8,16 @@ import App, { Middleware, Route, Routes } from './app';
  * export default {
  *  async fetch(request) {
  *    const app = new App();
- *    app.setRouter('api', (req, res) => {})
- *    const cors = { 'Access-Control-Allow-Methods': '*' }
- *    const worker = new Worker(request, app, cors)
+ *    app.setRouter('api', router, middleware, middleware)
+ *    const headers = { 'Access-Control-Allow-Methods': '*' }
+ *    const worker = new Worker(request, app, headers)
  *    return await worker.listen()
  *  }
  * }
  */
 export default class Worker {
-  req: Req;
-  res: Res;
+  req: ClientRequest;
+  res: WorkerResponse;
 
   /**
    * Creates an instance of the Worker class.
@@ -26,13 +26,13 @@ export default class Worker {
    * @param {Record<string, string>} [headers] - Any default headers, that will be added to each response.
    */
   constructor(req: Request, public app: App, headers?: Record<string, string>) {
-    this.req = new Req(req);
-    this.res = new Res(req, headers);
+    this.req = new ClientRequest(req);
+    this.res = new WorkerResponse(req, headers);
   }
 
   /**
    * Initializes your worker and handles incoming request by executing the registered controllers and middlewares.
-   * @returns {Promise<Response>} A Promise with the Response
+   * @returns {Promise<Response>} The response
    */
   public async listen(): Promise<Response> {
     try {

@@ -1,5 +1,5 @@
 /**
- * The Req class, extends the Request object.
+ * The ClientRequest class, extends the Request object.
  * @example
  * const app = new App()
  * app.authenticate((req, res) => {
@@ -7,14 +7,14 @@
  *    return res.status(400).json({ data: 'Unauthorized!' })
  * })
  */
-class Req extends Request {
+class ClientRequest extends Request {
   [key: string]: any;
   param: Record<string, string> = {};
   _url: URL;
 
   /**
-   * Creates an instance of the Req class.
-   * @param {Request} request - The incoming request.
+   * Creates an instance of the ClientRequest class.
+   * @param {Request} request - The incoming http request.
    */
   constructor(request: Request) {
     super(request.url, request);
@@ -22,4 +22,4 @@ class Req extends Request {
   }
 }
 
-export default Req;
+export default ClientRequest;

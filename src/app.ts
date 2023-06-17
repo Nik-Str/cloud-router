@@ -1,24 +1,27 @@
-import Req from './request';
-import Res from './response';
+import ClientRequest from './request';
+import WorkerResponse from './response';
 
 /**
  * Represents a middleware function.
- * @param {Req} req - The Req class extends Request.
- * @param {Res} res - The Res class representing the HTTP response.
- * @returns {void | Promise<Response | Error | any> | Response | Error} The result of the middleware execution.
+ * @param {ClientRequest} req - The ClientRequest class extends Request.
+ * @param {WorkerResponse} res - The WorkerResponse class representing the http response.
+ * @returns {void | Response | Error | any | Promise<Response | Error | any | void>} The result of the middleware execution.
  */
-export type Middleware = (req: Req, res: Res) => void | Promise<Response | Error | any> | Response | Error;
+export type Middleware = (
+  req: ClientRequest,
+  res: WorkerResponse
+) => void | Response | Error | any | Promise<Response | Error | any | void>;
 
 /**
  * Represents a controller function.
- * @param {Req} req - The Req class extends Request.
- * @param {Res} res - The Res class representing the HTTP response.
- * @returns {Response | Promise<Response>} The response object.
+ * @param {ClientRequest} req - The ClientRequest class extends Request.
+ * @param {WorkerResponse} res - The WorkerResponse class representing the http response.
+ * @returns {Response | Error | Promise<Response | Error>} The response object.
  */
-export type Controller = (req: Req, res: Res) => Response | Promise<Response>;
+export type Controller = (req: ClientRequest, res: WorkerResponse) => Response | Promise<Response>;
 
 /**
- * Represents HTTP methods.
+ * Represents http methods.
  */
 export type Methods = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTION' | 'HEAD';
 
@@ -105,7 +108,7 @@ export default class App {
   }
 
   /**
-   * Sets the error handler for the application.
+   * Sets the error handler for the application. This callback will be executed if any error occurs within the application outside lower level try/catch block.
    * @param {Controller} controller - The error handler controller.
    */
   public error(controller: Controller) {
@@ -113,7 +116,7 @@ export default class App {
   }
 
   /**
-   * Sets the not found handler for the application.
+   * Sets the not found handler for the application. This callback will be executed if the path of the incoming request has no corresponding router registered within the application.
    * @param {Controller} controller - The not found handler controller.
    */
   public notFound(controller: Controller) {
@@ -180,7 +183,7 @@ export default class App {
 export class Router {
   routes: Route[] = [];
   /**
-   * Registers a route with the POST HTTP method.
+   * Registers a route with the POST http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -189,7 +192,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the GET HTTP method.
+   * Registers a route with the GET http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -198,7 +201,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the PUT HTTP method.
+   * Registers a route with the PUT http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -207,7 +210,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the DELETE HTTP method.
+   * Registers a route with the DELETE http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -216,7 +219,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the PATCH HTTP method.
+   * Registers a route with the PATCH http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -225,7 +228,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the OPTION HTTP method.
+   * Registers a route with the OPTION http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -234,7 +237,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the HEAD HTTP method.
+   * Registers a route with the HEAD http method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */

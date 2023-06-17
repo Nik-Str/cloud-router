@@ -13,7 +13,7 @@ export type CookieOptions = {
 };
 
 /**
- * The Res class representing the HTTP response.
+ * The WorkerResponse class representing the HTTP response.
  * @example
  * const app = new App()
  * app.authenticate((req, res) => {
@@ -21,7 +21,7 @@ export type CookieOptions = {
  *    return res.status(400).json({ data: 'Unauthorized!' })
  * })
  */
-export default class Res {
+export default class WorkerResponse {
   private statusCode = 200;
   private statusText = 'ok';
   private headers: Headers;
@@ -35,7 +35,7 @@ export default class Res {
   };
 
   /**
-   * Creates an instance of the Res class.
+   * Creates an instance of the WorkerResponse class.
    * @param {Request} req - The incoming request.
    * @param {Record<string, string>} headers - Any default response headers.
    */
@@ -52,9 +52,9 @@ export default class Res {
    * Sets the status code and status text of the response.
    * @param {number} statusCode - The status code.
    * @param {string} statusText - The status text.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  status(statusCode: number, statusText?: string): Res {
+  status(statusCode: number, statusText?: string): WorkerResponse {
     this.statusCode = statusCode;
     if (statusText) this.statusText = statusText;
     return this;
@@ -63,11 +63,12 @@ export default class Res {
   /**
    * Sends a JSON response.
    * @param {any} data - The data to be sent as JSON.
-   * @returns {Response} The JSON response.
+   * @returns {Response} The JSON http response.
    */
   json(data: any): Response {
     const body = JSON.stringify(data, null, 2);
     this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Content-Length', body.length.toString());
     return new Response(body, this.getResponseOptions());
   }
 
@@ -75,7 +76,7 @@ export default class Res {
    * Sends a response with the provided body and content type.
    * @param {BodyInit} body - The response body.
    * @param {string} contentType - The content type of the response.
-   * @returns {Response} The response.
+   * @returns {Response} The http response.
    */
   send(body: BodyInit, contentType: string): Response {
     this.headers.append('Content-Type', contentType);
@@ -85,7 +86,7 @@ export default class Res {
   /**
    * Redirects the response to the specified path.
    * @param {string} path - The path to redirect to.
-   * @returns {Response} The redirection response.
+   * @returns {Response} The redirection http response.
    */
   redirect(path: string): Response {
     this.headers.append('Location', path);
@@ -97,7 +98,7 @@ export default class Res {
   /**
    * Pipes the response to another Response object.
    * @param {Response} response - The response to pipe to.
-   * @returns {Response} The piped response.
+   * @returns {Response} The piped http response.
    */
   pipe(response: Response): Response {
     const { readable, writable } = new TransformStream();
@@ -108,9 +109,9 @@ export default class Res {
   /**
    * Sets multiple headers in the response.
    * @param {Record<string, string>} headers - The headers to set.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  setHeaders(headers: Record<string, string>): Res {
+  setHeaders(headers: Record<string, string>): WorkerResponse {
     Object.entries(headers).forEach(([key, value]) => this.headers.append(key, value));
     return this;
   }
@@ -119,18 +120,18 @@ export default class Res {
    * Sets a single header in the response.
    * @param {string} name - The name of the header.
    * @param {string} value - The value of the header.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  setHeader(name: string, value: string): Res {
+  setHeader(name: string, value: string): WorkerResponse {
     this.headers.append(name, value);
     return this;
   }
 
   /**
    * Clears all headers in the response.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  clearHeaders(): Res {
+  clearHeaders(): WorkerResponse {
     this.headers = new Headers();
     return this;
   }
@@ -138,9 +139,9 @@ export default class Res {
   /**
    * Clears a specific header in the response.
    * @param {string} name - The name of the header to clear.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  clearHeader(name: string): Res {
+  clearHeader(name: string): WorkerResponse {
     this.headers.delete(name);
     return this;
   }
@@ -171,9 +172,9 @@ export default class Res {
    * @param {string} name - The name of the cookie.
    * @param {string} value - The value of the cookie.
    * @param {CookieOptions} options - The options for the cookie.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  setCookie(name: string, value: string, options: CookieOptions = {}): Res {
+  setCookie(name: string, value: string, options: CookieOptions = {}): WorkerResponse {
     const cookie: string[] = [`${name}=${value};`];
     for (const [key, option] of Object.entries({ ...this.cookiesOptions, ...options })) {
       cookie.push(`${key}=${option};`);
@@ -185,9 +186,9 @@ export default class Res {
   /**
    * Clears a cookie in the response.
    * @param {string} name - The name of the cookie to clear.
-   * @returns {Res} The Res instance.
+   * @returns {WorkerResponse} The WorkerResponse instance.
    */
-  clearCookie(name: string): Res {
+  clearCookie(name: string): WorkerResponse {
     this.setCookie(name, '', { expires: new Date(0) });
     return this;
   }

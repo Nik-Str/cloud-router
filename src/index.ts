@@ -1,6 +1,6 @@
 import App, { Router } from './app';
-import Req from './request';
-import Res from './response';
+import ClientRequest from './request';
+import WorkerResponse from './response';
 import Worker from './worker';
 
-export { App, Router, Req, Res, Worker };
+export { App, Router, ClientRequest, WorkerResponse, Worker };

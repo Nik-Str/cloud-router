@@ -1,25 +1,25 @@
-import Req from '../src/request';
-import Res from '../src/response';
+import ClientRequest from '../src/request';
+import WorkerResponse from '../src/response';
 import App, { Router } from '../src/app';
 import Worker from '../src/worker';
 
 let i = 0;
-const authenticate = (req: Req, res: Res) => {
+const authenticate = (req: ClientRequest, res: WorkerResponse) => {
   if (req._url.searchParams.has('abort')) return res.status(400).json({ data: 'aborted' });
 };
-const publicRoute = (req: Req, res: Res) => res.status(200).json({ data: 'Public' });
-const middlewareA = (req: Req) =>
+const publicRoute = (req: ClientRequest, res: WorkerResponse) => res.status(200).json({ data: 'Public' });
+const middlewareA = (req: ClientRequest) =>
   new Promise((resolve) => {
     setTimeout(() => {
       req.testA = i++;
       resolve(null);
     }, 500);
   });
-const middlewareB = (req: Req, res: Res) => {
+const middlewareB = (req: ClientRequest, res: WorkerResponse) => {
   if (req._url.searchParams.has('failed')) return res.status(406).json({ data: 'failed' });
   req.testB = i++;
 };
-const middlewareC = (req: Req, res: Res) =>
+const middlewareC = (req: ClientRequest, res: WorkerResponse) =>
   new Promise((resolve) => {
     setTimeout(() => {
       if (req._url.searchParams.has('invalid')) {
@@ -30,25 +30,26 @@ const middlewareC = (req: Req, res: Res) =>
       resolve(null);
     }, 1000);
   });
-const middlewareD = (req: Req) => {
+const middlewareD = (req: ClientRequest) => {
   req.testD = i++;
 };
-const middlewareError = (req: Req) => {
+const middlewareError = (req: ClientRequest) => {
   if (req._url.searchParams.has('error')) throw new Error('123');
 };
-const controllerA = (req: Req, res: Res) => res.status(200).json({ data: 'A' });
-const controllerB = (req: Req, res: Res) => res.status(200).json({ data: 'B' });
-const controllerC = (req: Req, res: Res) => res.status(200).json({ data: 'C' });
-const controllerD = (req: Req, res: Res) => res.status(200).json({ data: 'D' });
-const controllerE = (req: Req, res: Res) => res.status(200).json({ data: 'E' });
-const controllerF = (req: Req, res: Res) =>
+const controllerA = (req: ClientRequest, res: WorkerResponse) => res.status(200).json({ data: 'A' });
+const controllerB = (req: ClientRequest, res: WorkerResponse) => res.status(200).json({ data: 'B' });
+const controllerC = (req: ClientRequest, res: WorkerResponse) => res.status(200).json({ data: 'C' });
+const controllerD = (req: ClientRequest, res: WorkerResponse) => res.status(200).json({ data: 'D' });
+const controllerE = (req: ClientRequest, res: WorkerResponse) => res.status(200).json({ data: 'E' });
+const controllerF = (req: ClientRequest, res: WorkerResponse) =>
   res.status(200).json({ a: req.testA, b: req.testB, c: req.testC, d: req.testD });
 const controllerError = () => {
   throw new Error('123');
 };
-const controllerG = (req: Req, res: Res) => res.status(200).json({ data: req.param, method: req.method });
-const notFound = (req: Req, res: Res) => res.status(404).json({ data: '404' });
-const error = (req: Req, res: Res) => res.status(500).json({ data: '500' });
+const controllerG = (req: ClientRequest, res: WorkerResponse) =>
+  res.status(200).json({ data: req.param, method: req.method });
+const notFound = (req: ClientRequest, res: WorkerResponse) => res.status(404).json({ data: '404' });
+const error = (req: ClientRequest, res: WorkerResponse) => res.status(500).json({ data: '500' });
 
 const routerA = new Router();
 routerA.get('/', controllerA);

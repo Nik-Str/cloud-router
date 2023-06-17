@@ -1,4 +1,4 @@
-import Res from '../src/response';
+import ServerResponse from '../src/response';
 
 const baseHeaders = {
   'Access-Control-Allow-Headers': '*',
@@ -18,9 +18,9 @@ const req = new Request('https://test.com', {
   credentials: 'include'
 });
 
-let res: Res;
+let res: ServerResponse;
 beforeEach(() => {
-  res = new Res(req, baseHeaders);
+  res = new ServerResponse(req, baseHeaders);
 });
 
 describe('Res class', () => {
@@ -36,6 +36,7 @@ describe('Res class', () => {
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(body);
     expect(response.headers.get('Content-Type')).toBe('application/json');
+    expect(response.headers.get('Content-Length')).toBe(JSON.stringify(body, null, 2).length.toString());
   });
 
   it('Send', async () => {
