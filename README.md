@@ -25,15 +25,17 @@
 
 <summary>Table of Contents</summary>
 
-<ol>
-  <li><a href="#about-the-project">About The Project</a></li>
-  <li><a href="#getting-started">Getting Started</a></li>
-  <li><a href="#usage">Usage</a></li>
-   <li><a href="#api">API</a></li>
-  <li><a href="#contributing">Contributing</a></li>
-  <li><a href="#license">License</a></li>
-  <li><a href="#contact">Contact</a></li>
-</ol>
+<details>
+  <ol>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
 <!-- ABOUT THE PROJECT -->
 
@@ -102,6 +104,32 @@ _For more advanced examples: [Example](https://github.com/Nik-Str/cloud-router/t
 <!-- API -->
 
 ## API
+
+Cloud Router defines two types of callback functions: Controllers and Middlewares. What sets them apart is the expected return value, where a Controller should return a response, but a middleware could return either a response or void.
+
+| Method/Class                           | Docs                                                                                                                                                                                                                                                                                                               |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Router`                               |                                                                                                                                                                                                                                                                                                                    |
+| .get('path', controller)               | The "get" method represents an HTTP GET API endpoint. Its function takes two arguments: 1. The path to trigger its execution. 2. A controller function. You can specify a dynamic path using this syntax: `path/:nameOfValue`. This value can then be found in the `req.params` object (see below).                |
+| .post('path', controller)              | Same as above, but it represents a HTTP POST API endpoint.                                                                                                                                                                                                                                                         |
+| .put('path', controller)               | Same as above, but it represents a HTTP PUT API endpoint.                                                                                                                                                                                                                                                          |
+| .patch('path', controller)             | Same as above, but it represents a HTTP PATCH API endpoint.                                                                                                                                                                                                                                                        |
+| .delete('path', controller)            | Same as above, but it represents a HTTP DELETE API endpoint.                                                                                                                                                                                                                                                       |
+| .option('path', controller)            | Same as above, but it represents a HTTP OPTION API endpoint.                                                                                                                                                                                                                                                       |
+| .head('path', controller)              | Same as above, but it represents a HTTP HEAD API endpoint.                                                                                                                                                                                                                                                         |
+| `App`                                  |                                                                                                                                                                                                                                                                                                                    |
+| .authenticate(middleware)              | The "authenticate" function takes a middleware function as an argument. This callback will be executed first for every incoming request.                                                                                                                                                                           |
+| .public('base', controller)            | The "public" function takes two arguments: 1. The base URL path of an incoming request that would trigger its callback. 2. The callback controller function. You can have multiple public routes in an application. Public routes are executed after the authentication callback but before any other middlewares. |
+| .middleware(middleware)                | The "middleware" function takes one or multiple middleware functions as its argument. These middlewares will be executed in order for every incoming request.                                                                                                                                                      |
+| .setRouter('base', router, middleware) | The "setRouter" function takes three arguments: 1. The base URL path of an incoming request that would trigger its callback. 2. A Router class instance. 3. One or multiple middlewares specific to any underlying endpoints of the router instance. You can have multiple routers in an application.              |
+| .error(controller)                     | The "error" function takes a controller function as its argument. This callback will be executed if an error occurs within your application outside of any lower level try/catch block.                                                                                                                            |
+| .notFound(controller)                  | The "notFound" function takes a controller function as its argument. Its callback will be executed if no registered routes match the incoming request URL path.                                                                                                                                                    |
+| .getAuthHandler()                      | Returns the authentication middleware.                                                                                                                                                                                                                                                                             |
+| .getPublicRoutes()                     | Returns all registered public routes.                                                                                                                                                                                                                                                                              |
+| .getMiddlewares()                      | Returns all application middlewares.                                                                                                                                                                                                                                                                               |
+| .getRouters()                          | Returns all registered routers.                                                                                                                                                                                                                                                                                    |
+| .getErrorHandler()                     | Returns the error controller.                                                                                                                                                                                                                                                                                      |
+| .getNotFoundHandler()                  | Returns the notFound controller.                                                                                                                                                                                                                                                                                   |
 
 <!-- CONTRIBUTING -->
 
