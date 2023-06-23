@@ -34,7 +34,7 @@ export default class Worker {
    * Initializes your worker and handles incoming request by executing the registered controllers and middlewares.
    * @returns {Promise<Response>} The response
    */
-  public async listen(): Promise<Response> {
+  async listen(): Promise<Response> {
     try {
       // Authenticate
       const authHandler = this.app.getAuthHandler();

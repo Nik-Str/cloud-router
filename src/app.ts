@@ -73,7 +73,7 @@ export default class App {
    * Sets the authentication middleware for the application. This callback will be executed first on every request, before any other middlewares or controllers.
    * @param {Middleware} middleware - The authentication middleware.
    */
-  public authenticate(middleware: Middleware) {
+  authenticate(middleware: Middleware) {
     this.authHandler = middleware;
   }
 
@@ -82,7 +82,7 @@ export default class App {
    * @param {string} path - The route base path.
    * @param {Controller} controller - The route controller.
    */
-  public public(path: string, controller: Controller) {
+  public(path: string, controller: Controller) {
     this.publicRoutes[path] = controller;
   }
 
@@ -90,7 +90,7 @@ export default class App {
    * Adds middlewares to the application.
    * @param {...Middleware} middlewares - The middlewares to be added.
    */
-  public middleware(...middlewares: Middleware[]) {
+  middleware(...middlewares: Middleware[]) {
     this.middlewares = middlewares;
   }
 
@@ -100,7 +100,7 @@ export default class App {
    * @param {Router} router - The router instance.
    * @param {...Middleware} middlewares - The middlewares to be added to the router.
    */
-  public setRouter(path: string, { routes }: Router, ...middlewares: Middleware[]) {
+  setRouter(path: string, { routes }: Router, ...middlewares: Middleware[]) {
     this.routers[path] = {
       middlewares,
       routes
@@ -111,7 +111,7 @@ export default class App {
    * Sets the error handler for the application. This callback will be executed if any error occurs within the application outside lower level try/catch block.
    * @param {Controller} controller - The error handler controller.
    */
-  public error(controller: Controller) {
+  error(controller: Controller) {
     this.errorHandler = controller;
   }
 
@@ -119,7 +119,7 @@ export default class App {
    * Sets the not found handler for the application. This callback will be executed if the path of the incoming request has no corresponding router registered within the application.
    * @param {Controller} controller - The not found handler controller.
    */
-  public notFound(controller: Controller) {
+  notFound(controller: Controller) {
     this.notFoundHandler = controller;
   }
 
@@ -127,7 +127,7 @@ export default class App {
    * Gets the registered routers.
    * @returns {Routers} The registered routers.
    */
-  public getRouters(): Routers {
+  getRouters(): Routers {
     return this.routers;
   }
 
@@ -135,7 +135,7 @@ export default class App {
    * Gets the registered middlewares.
    * @returns {Middleware[] | []} The registered middlewares.
    */
-  public getMiddlewares(): Middleware[] | [] {
+  getMiddlewares(): Middleware[] | [] {
     return this.middlewares;
   }
 
@@ -143,7 +143,7 @@ export default class App {
    * Gets the registered public routes.
    * @returns {Public} The registered public routes.
    */
-  public getPublicRoutes(): Public {
+  getPublicRoutes(): Public {
     return this.publicRoutes;
   }
 
@@ -151,7 +151,7 @@ export default class App {
    * Gets the authentication middleware.
    * @returns {Middleware | undefined} The authentication middleware.
    */
-  public getAuthHandler(): Middleware | undefined {
+  getAuthHandler(): Middleware | undefined {
     return this.authHandler;
   }
 
@@ -159,7 +159,7 @@ export default class App {
    * Gets the error handler.
    * @returns {Controller | undefined} The error handler.
    */
-  public getErrorHandler(): Controller | undefined {
+  getErrorHandler(): Controller | undefined {
     return this.errorHandler;
   }
 
@@ -167,7 +167,7 @@ export default class App {
    * Gets the not found handler.
    * @returns {Controller | undefined} The not found handler.
    */
-  public getNotFoundHandler(): Controller | undefined {
+  getNotFoundHandler(): Controller | undefined {
     return this.notFoundHandler;
   }
 }
