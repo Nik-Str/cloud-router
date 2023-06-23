@@ -16,7 +16,7 @@ export type CookieOptions = {
  * The WorkerResponse class representing the HTTP response.
  * @example
  * const app = new App()
- * app.authenticate((req, res) => {
+ * app.authenticate((req: ClientRequest, res: WorkerResponse) => {
  *  if (!req.headers.get("Token"))
  *    return res.status(400).json({ data: 'Unauthorized!' })
  * })
@@ -63,7 +63,7 @@ export default class WorkerResponse {
   /**
    * Sends a JSON response.
    * @param {any} data - The data to be sent as JSON.
-   * @returns {Response} The JSON http response.
+   * @returns {Response} A new Response instance.
    */
   json(data: any): Response {
     const body = JSON.stringify(data, null, 2);
@@ -76,7 +76,7 @@ export default class WorkerResponse {
    * Sends a response with the provided body and content type.
    * @param {BodyInit} body - The response body.
    * @param {string} contentType - The content type of the response.
-   * @returns {Response} The http response.
+   * @returns {Response} A new Response instance.
    */
   send(body: BodyInit, contentType: string): Response {
     this.headers.append('Content-Type', contentType);
@@ -86,7 +86,7 @@ export default class WorkerResponse {
   /**
    * Redirects the response to the specified path.
    * @param {string} path - The path to redirect to.
-   * @returns {Response} The redirection http response.
+   * @returns {Response} A new Response instance.
    */
   redirect(path: string): Response {
     this.headers.append('Location', path);
@@ -98,7 +98,7 @@ export default class WorkerResponse {
   /**
    * Pipes the response to another Response object.
    * @param {Response} response - The response to pipe to.
-   * @returns {Response} The piped http response.
+   * @returns {Response} A new Response instance.
    */
   pipe(response: Response): Response {
     const { readable, writable } = new TransformStream();

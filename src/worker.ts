@@ -5,12 +5,12 @@ import App, { Middleware, Route, Routes } from './app';
 /**
  * The Worker class, handles the App class instance execution.
  * @example
- * export default {
- *  async fetch(request) {
+ * const worker: ExportedHandler<Bindings> = {
+ *  async fetch(req, env) {
  *    const app = new App();
  *    app.setRouter('api', router, middleware, middleware)
  *    const headers = { 'Access-Control-Allow-Methods': '*' }
- *    const worker = new Worker(request, app, headers)
+ *    const worker = new Worker(req, app, headers)
  *    return await worker.listen()
  *  }
  * }
@@ -32,7 +32,7 @@ export default class Worker {
 
   /**
    * Initializes your worker and handles incoming request by executing the registered controllers and middlewares.
-   * @returns {Promise<Response>} The response
+   * @returns {Promise<Response>} A new Response instance.
    */
   async listen(): Promise<Response> {
     try {

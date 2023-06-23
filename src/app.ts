@@ -3,8 +3,8 @@ import WorkerResponse from './response';
 
 /**
  * Represents a middleware function.
- * @param {ClientRequest} req - The ClientRequest class extends Request.
- * @param {WorkerResponse} res - The WorkerResponse class representing the http response.
+ * @param {ClientRequest} req - The ClientRequest class extending the Request object.
+ * @param {WorkerResponse} res - The WorkerResponse class representing the HTTP Response.
  * @returns {void | Response | Error | any | Promise<Response | Error | any | void>} The result of the middleware execution.
  */
 export type Middleware = (
@@ -14,14 +14,14 @@ export type Middleware = (
 
 /**
  * Represents a controller function.
- * @param {ClientRequest} req - The ClientRequest class extends Request.
- * @param {WorkerResponse} res - The WorkerResponse class representing the http response.
+ * @param {ClientRequest} req - The ClientRequest class extending the Request object.
+ * @param {WorkerResponse} res - The WorkerResponse class representing the HTTP Response.
  * @returns {Response | Error | Promise<Response | Error>} The response object.
  */
 export type Controller = (req: ClientRequest, res: WorkerResponse) => Response | Promise<Response>;
 
 /**
- * Represents http methods.
+ * Represents HTTP methods.
  */
 export type Methods = 'POST' | 'GET' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTION' | 'HEAD';
 
@@ -78,7 +78,7 @@ export default class App {
   }
 
   /**
-   * Adds a public route to the application. Public routes are executed before any App middlewares, but after Authentication middleware.
+   * Adds a public route to the application. Public routes are executed before any app middlewares, but after authentication middleware.
    * @param {string} path - The route base path.
    * @param {Controller} controller - The route controller.
    */
@@ -97,7 +97,7 @@ export default class App {
   /**
    * Adds a new router to the application
    * @param {string} path - The router path.
-   * @param {Router} router - The router instance.
+   * @param {Router} router - The Router instance.
    * @param {...Middleware} middlewares - The middlewares to be added to the router.
    */
   setRouter(path: string, { routes }: Router, ...middlewares: Middleware[]) {
@@ -108,7 +108,7 @@ export default class App {
   }
 
   /**
-   * Sets the error handler for the application. This callback will be executed if any error occurs within the application outside lower level try/catch block.
+   * Sets the error handler for the application. This callback will be executed if an error occurs within the application outside any lower level try/catch block.
    * @param {Controller} controller - The error handler controller.
    */
   error(controller: Controller) {
@@ -173,17 +173,17 @@ export default class App {
 }
 
 /**
- * The Router class, represents a router with route registration methods.
+ * The Router class, enables easy registration of API routes.
  * @example
  * const router = new Router(request);
- * router.get('user', (req, res) => {})
- * router.get('user/:id', (req, res) => {})
- * router.post('/', (req, res) => {})
+ * router.get('user', (req: ClientRequest, res: WorkerResponse) => {})
+ * router.get('user/:id', (req: ClientRequest, res: WorkerResponse) => {})
+ * router.post('/', (req: ClientRequest, res: WorkerResponse) => {})
  */
 export class Router {
   routes: Route[] = [];
   /**
-   * Registers a route with the POST http method.
+   * Registers a route with the POST HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -192,7 +192,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the GET http method.
+   * Registers a route with the GET HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -201,7 +201,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the PUT http method.
+   * Registers a route with the PUT HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -210,7 +210,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the DELETE http method.
+   * Registers a route with the DELETE HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -219,7 +219,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the PATCH http method.
+   * Registers a route with the PATCH HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -228,7 +228,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the OPTION http method.
+   * Registers a route with the OPTION HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
@@ -237,7 +237,7 @@ export class Router {
   }
 
   /**
-   * Registers a route with the HEAD http method.
+   * Registers a route with the HEAD HTTP method.
    * @param {string} path - The route path.
    * @param {Controller} controller - The route controller.
    */
