@@ -113,7 +113,7 @@ Cloud Router is built upon a foundation of five distinct classes, each serving a
 
 3. Router: The Router class offers a convenient means of registering API routes within the Cloud Router.
 
-4. App: The App class acts as a wrapper for the application logic and execution within the Cloud Router. It encapsulates the core functionalities and operations of the Router.
+4. App: The App class serves as a wrapper for the application logic within the Cloud Router framework, encapsulating the essential functionalities and operations.
 
 5. Worker: Responsible for executing the application logic, the Worker class handles the processing and management of the defined operations within the Cloud Router.
 
