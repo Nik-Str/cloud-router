@@ -99,7 +99,7 @@ const handler: ExportedHandler = {
 export default worker;
 ```
 
-_For more advanced examples: [Example](https://github.com/Nik-Str/cloud-router/tree/master/example)_
+_For more detailed examples: [Example](https://github.com/Nik-Str/cloud-router/tree/master/example)_
 
 <!-- API -->
 
@@ -129,7 +129,7 @@ What sets them apart is the expected return value, where a Controller should ret
 | `WorkerResponse`      |                                                                                                                                                                                                                                                                                                                                                                  |
 | .status()             | The `status` function sets the HTTP status code of the response object. It accepts one argument, which is the response code itself, and then returns the `WorkerResponse` object.                                                                                                                                                                                |
 | .json()               | The `json` function takes any valid data types that can be stringified to JSON as its argument and returns a new `Response` object.                                                                                                                                                                                                                              |
-| .send()               | The `send` method require two arguments: a response body and a 'Content-Type' value for the HTTP header. It returns a new `Response` object.                                                                                                                                                                                                                     |
+| .send()               | The `send` method takes two arguments: a response body and a 'Content-Type' value for the HTTP header. It returns a new `Response` object.                                                                                                                                                                                                                       |
 | .redirect()           | The `redirect` method returns a new `Response` object that redirects the incoming request to the specified URL or path.                                                                                                                                                                                                                                          |
 | .pipe()               | The `pipe` method takes a response object as its argument and pipes it to a new `Response` object that it returns.                                                                                                                                                                                                                                               |
 | .setHeaders()         | The `setHeaders` method accepts an object containing multiple headers as argument, attaches it to the response object, and returns the `WorkerResponse` object.                                                                                                                                                                                                  |
