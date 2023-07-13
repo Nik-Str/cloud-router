@@ -8,7 +8,7 @@ import WorkerResponse from './response';
  * @returns {void | Response | Error | any | Promise<Response | Error | any | void>} The result of the middleware execution.
  */
 export type Middleware = (
-  req: ClientRequest,
+  req: ClientRequest<undefined | any, Record<string, string> | any>,
   res: WorkerResponse
 ) => void | Response | Error | any | Promise<Response | Error | any | void>;
 
@@ -18,7 +18,10 @@ export type Middleware = (
  * @param {WorkerResponse} res - The WorkerResponse class representing the HTTP Response.
  * @returns {Response | Error | Promise<Response | Error>} The response object.
  */
-export type Controller = (req: ClientRequest, res: WorkerResponse) => Response | Promise<Response>;
+export type Controller = (
+  req: ClientRequest<undefined | any, Record<string, string> | any>,
+  res: WorkerResponse
+) => Response | Promise<Response>;
 
 /**
  * Represents HTTP methods.

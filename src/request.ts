@@ -7,10 +7,11 @@
  *    return res.status(400).json({ data: 'Unauthorized!' })
  * })
  */
-class ClientRequest extends Request {
+class ClientRequest<Data = undefined, Param = Record<string, never>> extends Request {
   [key: string]: any;
-  param: Record<string, string> = {};
+  param: Param | Record<string, string> = {};
   _url: URL;
+  data: Data | undefined;
 
   /**
    * Creates an instance of the ClientRequest class.

@@ -78,8 +78,8 @@ export default class WorkerResponse {
    * @param {string} contentType - The content type of the response.
    * @returns {Response} A new Response instance.
    */
-  send(body: BodyInit, contentType: string): Response {
-    this.headers.append('Content-Type', contentType);
+  send(body?: BodyInit | undefined, contentType?: string): Response {
+    if (contentType) this.headers.append('Content-Type', contentType);
     return new Response(body, this.getResponseOptions());
   }
 
