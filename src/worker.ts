@@ -86,7 +86,10 @@ export default class Worker {
     } catch (err: Error | any) {
       // Error handler
       const errorHandler = this.app.getErrorHandler();
-      if (errorHandler) return await errorHandler(this.req, this.res);
+      if (errorHandler) {
+        this.req.error = err;
+        return await errorHandler(this.req, this.res);
+      }
       return this.res.status(500, `Error: ${err.message}`).send('500 internal server error', 'text/plain');
     }
   }

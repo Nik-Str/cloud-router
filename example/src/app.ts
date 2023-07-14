@@ -5,8 +5,8 @@ import userRouter from './routes/user';
 import authenticate from './middlewares/authenticate';
 import userAuthorization from './middlewares/userAuthorization';
 import imageHandler from './public/image';
-import errorHandler from './controllers/errorHandler';
-import notFoundHandler from './controllers/404Handler';
+import errorHandler from './controllers/error';
+import notFoundHandler from './controllers/404';
 import sessionRouter from './routes/session';
 import cors from './middlewares/cors';
 

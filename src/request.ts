@@ -12,6 +12,7 @@ class ClientRequest<Data = undefined, Param = Record<string, never>> extends Req
   param: Param | Record<string, string> = {};
   _url: URL;
   data: Data | undefined;
+  error: Error | undefined;
 
   /**
    * Creates an instance of the ClientRequest class.

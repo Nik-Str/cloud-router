@@ -92,7 +92,7 @@ import app from './app';
 const handler: ExportedHandler = {
   async fetch(request: Request) {
     const worker = new Worker(request, app);
-    return await worker.listen();
+    return worker.listen();
   }
 };
 
@@ -144,6 +144,7 @@ What sets them apart is the expected return value, where a Controller should ret
 | .param                | This property holds the value of the dynamic path provided in the `Router` registration method.                                                                                                                                                                                                                                                                  |
 | .\_url                | This property holds a `URL` object representing the request URL.                                                                                                                                                                                                                                                                                                 |
 | .data                 | This property serves as a placeholder and is primarily intended to facilitate generic typing for the parsed request body.                                                                                                                                                                                                                                        |
+| .error                | This property contains any runtime error object.                                                                                                                                                                                                                                                                                                                 |
 | `Router`              |                                                                                                                                                                                                                                                                                                                                                                  |
 | .get()                | Each `Router` method registers a new HTTP API endpoint that corresponds to its name. These methods accept two arguments: the path that triggers the execution of the endpoint and a controller function. Dynamic paths can be specified using the syntax path/:nameOfValue, allowing for the extraction of the corresponding value from the `req.params` object. |
 | .post()               | -"-                                                                                                                                                                                                                                                                                                                                                              |
