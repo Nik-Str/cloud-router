@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "esnext",
+    "module": "esnext",
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "lib": ["esnext", "webworker"],
+    "types": ["node", "jest"],
+    "forceConsistentCasingInFileNames": true,
+    "strictFunctionTypes": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "isolatedModules": false,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "removeComments": false,
+    "outDir": "build/compiled",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["test"]
+}

@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": ["./tsconfig.json"] },
+  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "rules": {
+    "@typescript-eslint/strict-boolean-expressions": 0,
+    "prettier/prettier": ["error"],
+    "no-plusplus": 0,
+    "no-console": 0,
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "class-methods-use-this": "off",
+    "consistent-return": "off",
+    "no-restricted-syntax": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
+    "no-async-promise-executor": "off",
+    "guard-for-in": "off",
+    "no-prototype-builtins": "off",
+    "no-promise-executor-return": "off",
+    "prefer-promise-reject-errors": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/newline-after-import": "off",
+    "no-return-await": "off",
+    "@typescript-eslint/return-await": "off",
+    "no-await-in-loop": "off",
+    "no-underscore-dangle": "off",
+    "max-classes-per-file": "off"
+  },
+  "ignorePatterns": ["test", "jest.config.js", "rollup.config.js"]
+}
