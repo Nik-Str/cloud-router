@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Nik-Str/cloud-router">
-    <img src="assets/logo.png" alt="Logo" width="320" height="320">
+    <img src="https://cloud-router-0207ab088c7c.herokuapp.com/logo.png" alt="Logo" width="320" height="320">
   </a>
 
   <h2 align="center">Cloud Router</h2>
