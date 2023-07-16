@@ -1,4 +1,4 @@
-import { App } from 'cloud-router';
+import { App } from '@ts-worker/cloud-router';
 import bodyParser from './middlewares/bodyParser';
 import cookieParser from './middlewares/cookieParser';
 import userRouter from './routes/user';

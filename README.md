@@ -67,7 +67,7 @@ npm install cloud-router
 
 ```typescript
 // routes.ts
-import { Router, ClientRequest, WorkerResponse } from 'cloud-router';
+import { Router, ClientRequest, WorkerResponse } from '@ts-worker/cloud-router';
 
 const router = new Router();
 router.get('/', (req: ClientRequest, res: WorkerResponse) => {
@@ -77,7 +77,7 @@ router.get('/', (req: ClientRequest, res: WorkerResponse) => {
 export default router;
 
 // app.ts
-import { App } from 'cloud-router';
+import { App } from '@ts-worker/cloud-router';
 import router from './router';
 
 const app = new App();
@@ -86,7 +86,7 @@ app.setRouter('api', router);
 export default app;
 
 // worker.ts
-import { Worker } from 'cloud-router';
+import { Worker } from '@ts-worker/cloud-router';
 import app from './app';
 
 const handler: ExportedHandler = {

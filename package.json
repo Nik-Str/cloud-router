@@ -1,5 +1,5 @@
 {
-  "name": "cloud-router",
+  "name": "@ts-worker/cloud-router",
   "version": "1.0.0",
   "description": "Inspired by Node Express, Cloud-Router makes it easier to build and organize your backend api using Cloudflare workers",
   "main": "build/index.js",
