@@ -1,4 +1,4 @@
-import { ClientRequest, WorkerResponse } from 'cloud-router';
+import { ClientRequest, WorkerResponse } from '@ts-worker/cloud-router';
 
 const proxySecret = 'MyApiSecret';
 
