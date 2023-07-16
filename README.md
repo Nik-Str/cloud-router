@@ -58,7 +58,7 @@ This project should be considered a work in progress, with the goal of adding mo
 To use this package, you need Node.js and npm installed on your local machine.
 
 ```sh
-npm install cloud-router
+npm i @ts-worker/cloud-router
 ```
 
 <!-- USAGE EXAMPLES -->

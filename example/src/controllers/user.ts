@@ -1,4 +1,4 @@
-import { ClientRequest, WorkerResponse } from '../../../build';
+import { ClientRequest, WorkerResponse } from '@ts-worker/cloud-router';
 
 const id = () => Math.floor(Math.random() * 1000).toString();
 
