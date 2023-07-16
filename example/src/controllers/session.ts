@@ -1,4 +1,4 @@
-import { ClientRequest, WorkerResponse } from '../../../build';
+import { ClientRequest, WorkerResponse } from '@ts-worker/cloud-router';
 
 type UserCredentials = { email: string; password: string };
 const userMock = { email: 'john.doe@gmail.com', password: '12345' };

@@ -12,6 +12,6 @@
     "wrangler": "^3.0.0"
   },
   "dependencies": {
-    "@ts-worker/cloud-router": "file:.."
+    "@ts-worker/cloud-router": "^1.0.0"
   }
 }
