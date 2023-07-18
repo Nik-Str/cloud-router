@@ -1,4 +1,4 @@
-import { ClientRequest, WorkerResponse } from '@ts-worker/cloud-router';
+import { ClientRequest, WorkerResponse } from 'cloud-router-ts';
 
 export default async (req: ClientRequest, res: WorkerResponse) => {
 	const fileName = req._url.pathname.split('/').pop();

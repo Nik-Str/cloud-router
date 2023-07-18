@@ -1,4 +1,4 @@
-import { Worker } from '@ts-worker/cloud-router';
+import { Worker } from 'cloud-router-ts';
 import app from './app';
 
 export interface Env {}

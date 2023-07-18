@@ -1,4 +1,4 @@
-import { Router } from '@ts-worker/cloud-router';
+import { Router } from 'cloud-router-ts';
 import { getUsers, getUserById, searchUser, updateUserLastName, replaceUserInfo, deleteUser, createUser } from '../controllers/user';
 
 const router = new Router();
