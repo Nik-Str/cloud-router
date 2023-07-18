@@ -2,7 +2,7 @@
 
 All notable changes to the project will be documented in this file.
 
-## Version 1.0.0 (Release Date: July 16, 2023)
+## Version 1.0.0 & 1.0.1 (Release Date: July 18, 2023)
 
 **Published to npmjs**
 
