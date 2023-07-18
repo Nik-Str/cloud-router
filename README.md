@@ -58,7 +58,7 @@ This project should be considered a work in progress, with the goal of adding mo
 To use this package, you need Node.js and npm installed on your local machine.
 
 ```sh
-npm i @ts-worker/cloud-router
+npm i cloud-router-ts
 ```
 
 <!-- USAGE EXAMPLES -->
@@ -67,7 +67,7 @@ npm i @ts-worker/cloud-router
 
 ```typescript
 // routes.ts
-import { Router, ClientRequest, WorkerResponse } from '@ts-worker/cloud-router';
+import { Router, ClientRequest, WorkerResponse } from 'cloud-router-ts';
 
 const router = new Router();
 router.get('/', (req: ClientRequest, res: WorkerResponse) => {
@@ -77,7 +77,7 @@ router.get('/', (req: ClientRequest, res: WorkerResponse) => {
 export default router;
 
 // app.ts
-import { App } from '@ts-worker/cloud-router';
+import { App } from 'cloud-router-ts';
 import router from './router';
 
 const app = new App();
@@ -86,7 +86,7 @@ app.setRouter('api', router);
 export default app;
 
 // worker.ts
-import { Worker } from '@ts-worker/cloud-router';
+import { Worker } from 'cloud-router-ts';
 import app from './app';
 
 const handler: ExportedHandler = {
