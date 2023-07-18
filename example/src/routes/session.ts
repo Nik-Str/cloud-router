@@ -1,4 +1,4 @@
-import { Router } from '@ts-worker/cloud-router';
+import { Router } from 'cloud-router-ts';
 import { login, logout, oauth, oauthCallback } from '../controllers/session';
 
 const router = new Router();
